@@ -1,5 +1,5 @@
 $(document).ready(function() {
-	var socket = io.connect('http://127.0.0.1:5000');
+	var socket = io.connect('http://0.0.0.0:5000');
 	socket.on('connect', function() {
 		socket.send('User has connected!');
 	});
