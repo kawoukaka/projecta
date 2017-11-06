@@ -1,1 +1,6 @@
 # projecta
+
+
+Usage
+=============
+. startUp.sh
