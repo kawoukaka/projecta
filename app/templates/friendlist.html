@@ -1,0 +1,64 @@
+<html>
+    <head>
+        <title>Flask-SocketIO-Chat</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="https://cdn.datatables.net/select/1.2.3/js/dataTables.select.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdn.datatables.net/select/1.2.3/css/select.dataTables.min.css">
+    </head>
+    <body  class="container">
+        <h1>Flask-SocketIO-Chat</h1>
+        <form method="POST" action='{{ url_for('main.choosefriend') }}' name="friends_form">
+          <div class="row">
+            <table class="table table-striped table-bordered" cellspacing="0" width="100%" id='friendslist'>
+              <thead>
+                <tr>
+                  <th><label>Friends</label></th>
+                </tr>
+              </thead>
+              <tbody>
+        {% for friend in friends %}
+                <tr>
+                  <td>{{ friend }}</td>
+                </tr>
+        {% endfor %}
+              </tbody>
+        </form>
+        <script>
+        var table = $('#friendslist').DataTable( {
+            dom: 'Bfrtip',
+            select: true,
+            buttons: [
+                {
+                    action: function () {
+                        var rows = table.rows( { selected: true } )
+                        console.log(rows)
+
+                    }
+                }
+            ]
+        } );
+        $('#friendslist tbody').on( 'click', 'td', function () {
+
+            $.ajax({
+              url:'/choosefriend',
+              type: 'POST',
+              data: {
+                     'friend':table.cell( this ).data(),
+                   },
+              async: true,
+              cache: false,
+
+              success: function() {
+                console.log('here')
+                window.location.replace('/chat')
+              }
+            });
+        } );
+
+        </script>
+    </body>
+</html>

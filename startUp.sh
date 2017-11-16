@@ -1,1 +1,3 @@
-FLASK_APP=app.py flask run
+#!/bin/bash
+export FLASK_APP=run.py FLASK_DEBUG=1
+python -m flask run
